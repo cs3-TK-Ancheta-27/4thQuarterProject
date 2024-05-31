@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Up Form</title>
+</head>
+<header>
+    <nav class="max">
+      <a class="chloe" href="index.html">Quantum Theories</a>
+    </nav>
+</header>
+<body>
+    <div>
+        <form id="signup" autocomplete="on" onsubmit="signup(event)">
+            <fieldset>
+                <legend>Sign Up Form</legend>
+
+                <label for="name">Name:</label><br>
+                <input type="text" id="name" name="name" required onblur="checkInput(this)" onfocus="clearBorder(this)"><br>
+
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email" required onblur="checkInput(this)" onfocus="clearBorder(this)"><br>
+
+                <label for="username">Username:</label><br>
+                <input type="text" id="signup-username" name="username" required onblur="checkInput(this)" onfocus="clearBorder(this)"><br>
+
+                <label for="password">Password:</label><br>
+                <input type="password" id="signup-password" name="password" required onblur="checkInput(this)" onfocus="clearBorder(this)"><br>
+
+                <label for="confirmPassword">Confirm Password:</label><br>
+                <input type="password" id="confirmPassword" name="confirmPassword" required onblur="checkPassword(this)" onfocus="clearBorder(this)"><br>
+
+                <label for="gender">Gender:</label><br>
+                <select name="gender" id="gender" required onblur="checkInput(this)" onfocus="clearBorder(this)">
+                    <option value="">Please Select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                    <option value="Prefer not to say">Prefer not to say</option>
+                </select><br>
+                <center>
+                    <input type="submit" value="Sign-Up">
+                    <input type="button" value="Clear" onclick="confirmClear()">
+                </center>
+            </fieldset>
+        </form>
+    </div>
+
+    <script>
+        function checkInput(input) {
+            if (input.value.trim() === "") {
+                input.style.border = "1px solid red";
+                return false;
+            } else {
+                input.style.border = "1px solid green";
+                return true;
+            }
+        }
+
+        function clearBorder(input) {
+            input.style.border = "";
+        }
+
+        function checkPassword(input) {
+            const password = document.getElementById("signup-password").value;
+            const confirmPassword = input.value;
+
+            if (password !== confirmPassword) {
+                input.style.border = "1px solid red";
+                return false;
+            } else {
+                input.style.border = "1px solid green";
+                return true;
+            }
+        }
+
+        function confirmClear() {
+            if (confirm("Are you sure you want to clear the form?")) {
+                document.getElementById("signup").reset();
+            }
+        }
+
+        function signup(event) {
+            event.preventDefault();
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const username = document.getElementById("signup-username").value;
+            const password = document.getElementById("signup-password").value;
+
+            if (localStorage.getItem(username)) {
+                alert("Username already exists");
+                return;
+            }
+
+            const user = {
+                name: name,
+                email: email,
+                username: username,
+                password: password,
+                gender: document.getElementById("gender").value
+            };
+
+            localStorage.setItem(username, JSON.stringify(user));
+            alert("Signup successful");
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 20px;
+        z-index: 2;
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    header .max {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .max .chloe {
+        color: #fff;
+        font-weight: 600;
+        font-size: 2.1rem;
+        text-decoration: none;
+        position: relative;
+        transition: all 0.3s;
+    }
+
+    .max .chloe span {
+        color: #C06B3E;
+    }
+
+    .max .sean {
+        display: flex;
+        list-style: none;
+        gap: 35px;
+    }
+
+    .sean a {
+        color: #fff;
+        text-decoration: none;
+        transition: 0.2s ease;
+    }
+
+    .sean a:hover {
+        color: #7054c0;
+    }
+
+    body {
+        background-color: white;
+        background-size: cover;
+        background-position: center;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background-image: url("indexbg.jpg");
+    }
+    
+
+    div {
+        background-color: rgb(255, 255, 255);
+        border: 3px solid;
+        margin: auto;
+        width: 80%;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 3px 10px 5px #000000;
+        margin-top: 100px;
+        max-width: 500px; 
+    }
+
+    input, select {
+        width: 100%;
+        padding: 8px;
+        margin: 6px 0;
+        box-sizing: border-box;
+        border-radius: 4px;
+        border-color: #ccc;
+    }
+
+    input[type="submit"], input[type="reset"] {
+        width: 48%;
+        padding: 8px;
+        margin: 6px 1%;
+        box-sizing: border-box;
+        border-radius: 4px;
+        border: none;
+        background-color: #3f266d;
+        color: white;
+        cursor: pointer;
+    }
+
+    input[type="submit"]:hover, input[type="reset"]:hover {
+        background-color: #7054c0;
+    }
+
+    textarea {
+        width: 100%;
+        padding: 8px;
+        margin: 6px 0;
+        box-sizing: border-box;
+        border-radius: 4px;
+        border-color: #ccc;
+    }
+</style>
+</html>
